@@ -1,10 +1,12 @@
 package app.com.example.garv.coursera;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -18,6 +20,7 @@ import io.realm.internal.RealmCore;
 
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.Fragment;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -27,7 +30,7 @@ import java.util.ArrayList;
 public class CourseListFragment extends Fragment implements LoaderManager.LoaderCallbacks<RealmResults<Course>> {
     private ArrayAdapter<String> mCourseAdapter;
     private ListView listView;
-
+    private CourseRealmAdapter courseRealmAdapter;
     @Override
     public String toString() {
         return super.toString();
@@ -46,6 +49,15 @@ public class CourseListFragment extends Fragment implements LoaderManager.Loader
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         listView = (ListView) rootView.findViewById(R.id.listview_course);
         getLoaderManager().initLoader(1, null, this).forceLoad();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Course course = courseRealmAdapter.getItem(position);
+                Intent intent = new Intent(getActivity(),DetailCourseActivity.class).putExtra("course",course.getId());
+                startActivity(intent);
+
+            }
+        });
         return rootView;
 
     }
@@ -59,8 +71,8 @@ public class CourseListFragment extends Fragment implements LoaderManager.Loader
     @Override
     public void onLoadFinished(Loader<RealmResults<Course>> loader, RealmResults<Course> data) {
         Realm realm = Realm.getInstance(getActivity());
-        CourseRealmAdapter adapter = new CourseRealmAdapter(getContext(),realm.where(Course.class).findAll());
-        listView.setAdapter(adapter);
+        courseRealmAdapter = new CourseRealmAdapter(getContext(),realm.where(Course.class).findAll());
+        listView.setAdapter(courseRealmAdapter);
     }
 
     @Override

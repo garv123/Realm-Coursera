@@ -1,5 +1,7 @@
 package app.com.example.garv.coursera.Realm;
 
+import java.io.Serializable;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -11,9 +13,26 @@ import io.realm.annotations.PrimaryKey;
 public class Course extends RealmObject {
     @PrimaryKey
     private String id;
-
+    private String photoUrl;
     public String getId() {
         return id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    private String description;
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 
     public void setId(String id) {
@@ -45,6 +64,8 @@ public class Course extends RealmObject {
     public void setInstructors(RealmList<Instructor> instructors) {
         this.instructors = instructors;
     }
+
+
 
     private RealmList<Instructor> instructors;
     private RealmList<Partner> partners;

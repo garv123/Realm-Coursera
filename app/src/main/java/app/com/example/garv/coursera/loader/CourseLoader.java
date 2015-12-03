@@ -37,7 +37,7 @@ public class CourseLoader extends AsyncTaskLoader<RealmResults<Course>> {
         String courseJsonString;
         realm = Realm.getInstance(getContext());
         try {
-            url = new URL("https://api.coursera.org/api/courses.v1/?includes=partnerIds,instructorIds&fields=instructors.v1(firstName,lastName,suffix)&fields=partners.v1(name,shortName,description)&fields=photoUrl,partnerIds,instructorIds");
+            url = new URL("https://api.coursera.org/api/courses.v1/?includes=partnerIds,instructorIds&fields=instructors.v1(firstName,lastName,suffix)&fields=partners.v1(name,shortName,description)&fields=photoUrl,partnerIds,instructorIds,description");
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
@@ -62,7 +62,7 @@ public class CourseLoader extends AsyncTaskLoader<RealmResults<Course>> {
             }
             courseJsonString = buffer.toString();
             parseJson(courseJsonString);
-            return realm.where(Course.class).findAll();
+            return null;
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -120,8 +120,10 @@ public class CourseLoader extends AsyncTaskLoader<RealmResults<Course>> {
                 try {
                     realm.beginTransaction();
                     Course course = realm.createObject(Course.class);
+                    course.setDescription(item.getString("description"));
                     course.setName(item.getString("name"));
                     course.setId(item.getString("id"));
+                    course.setPhotoUrl(item.getString("photoUrl"));
                     for (Instructor instructor : resultInstructor) {
                         course.getInstructors().add(instructor);
                     }

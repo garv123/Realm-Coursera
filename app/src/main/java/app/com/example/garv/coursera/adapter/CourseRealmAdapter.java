@@ -7,6 +7,22 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
+import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
+import com.nostra13.universalimageloader.utils.StorageUtils;
+
+import java.io.File;
+
 import app.com.example.garv.coursera.R;
 import app.com.example.garv.coursera.Realm.Course;
 import app.com.example.garv.coursera.Realm.Instructor;
@@ -21,8 +37,22 @@ import io.realm.RealmResults;
  */
 public class CourseRealmAdapter extends RealmBaseAdapter<Course> implements ListAdapter {
     RealmResults<Course> courses;
+    ImageLoader imageLoader;
     public CourseRealmAdapter(Context context,RealmResults<Course> realmResults) {
         super(context, realmResults, true);
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .imageScaleType(ImageScaleType.EXACTLY)
+                .displayer(new FadeInBitmapDisplayer(300)).build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
+                context)
+                .defaultDisplayImageOptions(defaultOptions)
+                .memoryCache(new WeakMemoryCache())
+                .build();
+
+        imageLoader = ImageLoader.getInstance();
+        imageLoader.init(config);
+
         courses = realmResults;
 
     }
@@ -52,15 +82,16 @@ public class CourseRealmAdapter extends RealmBaseAdapter<Course> implements List
         String partnerName = "";
         RealmList<Instructor> instructors = course.getInstructors();
         for(Instructor instructor: instructors) {
-            instructorFullName = instructorFullName + "," + instructor.getFullName();
+            instructorFullName += instructor.getFullName() + " ";
         }
 
         RealmList<Partner> partners = course.getPartners();
 
         for(Partner partner: partners) {
-            partnerName = partnerName + "," +partner.getName();
+            partnerName += partner.getName() + " ";
         }
-
+        holder.imageView.setImageResource(R.drawable.ic_launcher);
+        imageLoader.displayImage(course.getPhotoUrl(), holder.imageView);
         holder.courseTextView.setText(course.getName());
         holder.universityTextView.setText(partnerName);
         holder.tutorTextView.setText(instructorFullName);

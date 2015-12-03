@@ -4,8 +4,8 @@
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="20dp"
         android:layout_alignParentTop="true"
         android:contentDescription="TODO"
         android:src="@drawable/ic_launcher"
@@ -22,17 +22,9 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="16dp"
-                android:singleLine="true"
-                android:text="University Name"
-                android:textSize="12sp"
-                android:layout_margin="5dp"/>
-            <TextView
                 android:id="@+id/university_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
                 android:text="Description"
                 android:textSize="12sp"
                 android:layout_margin="5dp"/>
@@ -42,17 +34,9 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="16dp"
-                android:singleLine="true"
-                android:text="Course Name"
-                android:textSize="12sp"
-                android:layout_margin="5dp"/>
-            <TextView
                 android:id="@+id/course_name"
                 android:layout_width="wrap_content"
                 android:layout_height="16dp"
-                android:singleLine="true"
                 android:text="Android Tutorials"
                 android:textSize="12sp"
                 android:layout_margin="5dp"/>
@@ -62,17 +46,9 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="16dp"
-                android:singleLine="true"
-                android:text="Tutor"
-                android:textSize="12sp"
-                android:layout_margin="5dp"/>
-            <TextView
                 android:id="@+id/tutor_name"
                 android:layout_width="wrap_content"
                 android:layout_height="16dp"
-                android:singleLine="true"
                 android:text="Garv Mathur"
                 android:textSize="12sp"
                 android:layout_margin="5dp"/>
