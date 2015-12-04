@@ -22,6 +22,10 @@ import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 
 import app.com.example.garv.coursera.R;
 import app.com.example.garv.coursera.Realm.Course;
@@ -95,6 +99,9 @@ public class CourseRealmAdapter extends RealmBaseAdapter<Course> implements List
         holder.courseTextView.setText(course.getName());
         holder.universityTextView.setText(partnerName);
         holder.tutorTextView.setText(instructorFullName);
+
+        HashMap<Integer,Integer> hash = new HashMap<Integer,Integer>();
+        Stack<Integer> s = new Stack<Integerr>();
         return convertView;
     }
 }
