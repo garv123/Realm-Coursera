@@ -99,9 +99,6 @@ public class CourseRealmAdapter extends RealmBaseAdapter<Course> implements List
         holder.courseTextView.setText(course.getName());
         holder.universityTextView.setText(partnerName);
         holder.tutorTextView.setText(instructorFullName);
-
-        HashMap<Integer,Integer> hash = new HashMap<Integer,Integer>();
-        Stack<Integer> s = new Stack<Integerr>();
         return convertView;
     }
 }
